@@ -11,6 +11,14 @@ export async function POST(request: NextRequest) {
     const reqBody = await request.json();
     const { username, email, password } = reqBody;
     //TODO- add more validation whene get empty data
+    // Check if user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return NextResponse.json(
+        { error: "User already exists" },
+        { status: 400 }
+      );
+    }
     const user = await User.find({ email });
     if (user) {
       NextResponse.json({ error: "User already exits" }, { status: 400 });

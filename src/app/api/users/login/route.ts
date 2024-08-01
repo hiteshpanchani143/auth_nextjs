@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
     if (!user) {
       return NextResponse.json({
         success: false,
-        error: "User does not exits",
+        message: "User does not exits",
         status: 400,
       });
     }
@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
   } catch (error: any) {
     return NextResponse.json({
       success: false,
-      error: error.message,
+      message: error.message,
       status: 500,
     });
   }
