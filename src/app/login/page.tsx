@@ -1,10 +1,9 @@
 "use client";
 import axios from "axios";
-import { error } from "console";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { toast } from "react-hot-toast";
+import toast  from "react-hot-toast";
 
 export const Login = () => {
   const router = useRouter();
@@ -20,11 +19,13 @@ export const Login = () => {
       setLoading(true);
       const response = await axios.post("/api/users/login", user);
       const data = response.data;
-      console.log(data);
       setUser({email:"",password:""})
       setLoading(false);
-      if(data){
+      if(data.success){
         router.push("/profile");
+        toast.success(data.message)
+      }else{
+        toast.error(data.message)
       }
     } catch (error: any) {
       console.log("catch block")

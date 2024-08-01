@@ -3,6 +3,7 @@ import User from "@/models/userModel";
 import { NextRequest, NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
 import { sendMail } from "@/helpers/mailer";
+import { Flamenco } from "next/font/google";
 
 connect();
 
@@ -15,8 +16,7 @@ export async function POST(request: NextRequest) {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return NextResponse.json(
-        { error: "User already exists" },
-        { status: 400 }
+        { message: "User already exists",status: 400,success:false },
       );
     }
     const user = await User.find({ email });

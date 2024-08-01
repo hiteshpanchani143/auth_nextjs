@@ -19,18 +19,19 @@ export const Signup = () => {
     try {
       setLoading(true);
       const response = await axios.post("/api/users/signup", user);
-      const data = response;
-      console.log(data);
+      const data = response.data;
       setUser({ username: "", email: "", password: "" });
       setLoading(false);
-      console.log(response);
-      if (data) {
+      if (data.success) {
         router.push("/login");
+        toast.success(data.message);
+      } else {
+        toast.error(data.message);
       }
     } catch (error: any) {
       setLoading(false);
       console.log("error in signup", error.message);
-      toast.error(error || "An error occurred during signup.");
+      toast.error(error.message);
     }
   };
 
